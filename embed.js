@@ -1,11 +1,12 @@
-const currentScript = (document.currentScript && document.currentScript.src) || 'https://app.slickstream.com/e2/embed.js';
-console.log('script start', currentScript);
-
-
 if ('serviceWorker' in navigator) {
+  const swScript = `data:application/javascript,(() => {
+    console.log('Hello from slick worker');
+  })();
+  `;
+
   const onLoad = async () => {
     try {
-      const swUrl = (new URL('./slick-worker.js', currentScript)).href;
+      const swUrl = swScript;
       const registration = await navigator.serviceWorker.register(swUrl);
       console.log('Slick service worker registration successful with scope: ', registration.scope);
     } catch (err) {
